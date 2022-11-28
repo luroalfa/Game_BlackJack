@@ -74,7 +74,7 @@ int main()
     }
     system("clear");
     //* We check if some of the players already have 21 points from the distribution of cards
-    if (players[0]->getWinState() == true || players[1]->getWinState() == true || players[2]->getWinState() == true)
+    if (players[0]->getWinState() || players[1]->getWinState() || players[2]->getWinState())
     {
         showAllCard();
         (players[0]->getWinState()) && cout << "El jugador " << players[0]->getName() << " ha ganado.";
@@ -115,10 +115,10 @@ int main()
             round++;
             system("clear");
             //* In the while we verify if someone has won or if all players did not request a card
-        } while ((players[0]->getRequestCard() == true || players[1]->getRequestCard() == true || players[2]->getRequestCard() == true) && (players[0]->getWinState() == false && players[1]->getWinState() == false && players[2]->getWinState() == false));
+        } while ((players[0]->getRequestCard() || players[1]->getRequestCard() || players[2]->getRequestCard()) && !(players[0]->getWinState() && !players[1]->getWinState() && !players[2]->getWinState()));
 
         //* Check if all players not request card
-        if (players[0]->getRequestCard() == false && players[1]->getRequestCard() == false && players[2]->getRequestCard() == false)
+        if (!players[0]->getRequestCard() && !players[1]->getRequestCard() && !players[2]->getRequestCard())
         {
             cout << "Jugador 1: " << players[0]->getPoints() << "\n";
             cout << "Jugador 2: " << players[1]->getPoints() << "\n";
