@@ -1,6 +1,8 @@
 # ♠️ ♥️  Game_BlackJack  ♦️ ♣️
 ## Game made in c++ 👨🏻‍💻
 
+![Image](https://github.com/luroalfa/perfil/blob/main/Init_game.jpeg)
+
 La implementación fue basada las reglas de negocio del cliente.
 
 
