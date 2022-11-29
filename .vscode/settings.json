@@ -8,7 +8,9 @@
     "memory": "cpp",
     "istream": "cpp",
     "functional": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "ostream": "cpp",
+    "random": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -1,7 +1,7 @@
 /*
     @author:        Luis A. Rodríguez F.
     Date:           Monday, November 21th, 2022.
-    Last edit:      Monday, November 28th, 2022.
+    Last edit:      Tuesday, November 29th, 2022.
     Description:
         Create a game of BlackJack or 21.
 */
@@ -96,7 +96,6 @@ int main()
             players[player]->setRequestCard(request);
             //* If your answer is YES, a card is delivered and it's removed of the maso.
             (request) && deliverCard(player);
-            // TODO Se debe comprobar si tiene 21 si los tiene ha ganado el juego y se modifica su estado WIN como true y salimos con un break.
             //* Check if the 21 points were exceeded if it was passed, check if it has a card A if it has a change value to one.
             (int(players[player]->getPoints()) > 21) && ((players[player]->doYouHaveCard_AS()) && players[player]->changeValueCard_AS());
             player++;
@@ -120,44 +119,130 @@ int main()
         //* Check if all players not request card
         if (!players[0]->getRequestCard() && !players[1]->getRequestCard() && !players[2]->getRequestCard())
         {
-            cout << "Jugador 1: " << players[0]->getPoints() << "\n";
-            cout << "Jugador 2: " << players[1]->getPoints() << "\n";
-            cout << "Jugador 3: " << players[2]->getPoints() << "\n";
-            // TODO Debo verificar si hay numero menores de 21 si es asi cuantos? y el mayor de ellos es el mas cercano.
-            // TODO Sino hay numeros menores debo verificar cual numero de ellos es el menor.
-            // Si todo pasaron el 21 quien gana?
-            // Jugador 1 : 19-->GANO!
-            // Jugador 2 : 18
-            // Jugador 3 : 24
-
-            /*
-            30-25=5
-            15-25=-10
-            18-25=-7
-
-            25
-
-
-            */
-
-            // Jugador 1 : 20-->GANO!
-            // Jugador 2 : 18
-            // Jugador 3 : 22-->GANO!
-
-            // Jugador 1 : 19
-            // Jugador 2 : 18
-            // Jugador 3 : 22-->GANO!
-
-            // Jugador 1 : 19-->GANO!
-            // Jugador 2 : 19-->GANO!
-            // Jugador 3 : 19-->GANO!
+            showAllCard();
+            if (players[0]->getPoints() == players[1]->getPoints() && players[1]->getPoints() == players[2]->getPoints())
+            {
+                cout << "Los 3 jugadores han ganado!";
+                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
+                cout << "Jugador " << players[0]->getName() << " con " << players[1]->getPoints() << " pts \n";
+                cout << "Jugador " << players[0]->getName() << " con " << players[2]->getPoints() << " pts \n";
+            }
+            else
+            {
+                //*If any of them went too far, we check if the other 2 are the same and if not, we show the winner
+                if (!players[0]->getBoolRanking())
+                {
+                    if (players[1]->getPoints() == players[2]->getPoints())
+                    {
+                        (players[1]->getBoolRanking()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
+                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                    }
+                    else
+                    {
+                        (players[1]->getPoints() > players[2]->getPoints()) ? cout << "El jugador " << players[1]->getName() << " ha ganado." : cout << "El jugador " << players[2]->getName() << " ha ganado.";
+                    }
+                }
+                else if (!players[1]->getBoolRanking())
+                {
+                    if (players[0]->getPoints() == players[2]->getPoints())
+                    {
+                        (players[0]->getBoolRanking()) && cout << "El jugador " << players[0]->getName() << " ha ganado.\n";
+                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                    }
+                    else
+                    {
+                        (players[0]->getPoints() > players[2]->getPoints()) ? cout << "El jugador " << players[0]->getName() << " ha ganado." : cout << "El jugador " << players[1]->getName() << " ha ganado.";
+                    }
+                }
+                else if (!players[2]->getBoolRanking())
+                {
+                    if (players[1]->getPoints() == players[0]->getPoints())
+                    {
+                        (players[1]->getBoolRanking()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
+                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                    }
+                    else
+                    {
+                        (players[1]->getPoints() > players[0]->getPoints()) ? cout << "El jugador " << players[1]->getName() << " ha ganado." : cout << "El jugador " << players[0]->getName() << " ha ganado.";
+                    }
+                }
+                else
+                {
+                    //*If someone has equal points and all players have less than 21 points
+                    if (players[0]->getPoints() == players[1]->getPoints() || players[0]->getPoints() == players[2]->getPoints() || players[1]->getPoints() == players[2]->getPoints())
+                    {
+                        if (players[0]->getPoints() == players[1]->getPoints())
+                        {
+                            if (players[0]->getPoints() > players[2]->getPoints())
+                            {
+                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
+                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
+                            }
+                            else
+                            {
+                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
+                            }
+                        }
+                        else if (players[0]->getPoints() == players[2]->getPoints())
+                        {
+                            if (players[0]->getPoints() > players[1]->getPoints())
+                            {
+                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
+                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
+                            }
+                            else
+                            {
+                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
+                            }
+                        }
+                        else if (players[1]->getPoints() == players[2]->getPoints())
+                        {
+                            if (players[1]->getPoints() > players[0]->getPoints())
+                            {
+                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
+                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
+                            }
+                            else
+                            {
+                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //*The 3 players have points less than 21pts, the one with the highest points must be selected
+                        if (players[0]->getPoints() > players[1]->getPoints())
+                        {
+                            if (players[0]->getPoints() > players[2]->getPoints())
+                            {
+                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
+                            }
+                            else
+                            {
+                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
+                            }
+                        }
+                        else
+                        {
+                            if (players[1]->getPoints() > players[2]->getPoints())
+                            {
+                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
+                            }
+                            else
+                            {
+                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
+                            }
+                        }
+                    }
+                }
+            }
         }
         else
         {
             showAllCard();
-            (players[0]->getWinState()) && cout << "El jugador " << players[0]->getName() << " ha ganado.";
-            (players[1]->getWinState()) && cout << "El jugador " << players[1]->getName() << " ha ganado.";
-            (players[2]->getWinState()) && cout << "El jugador " << players[2]->getName() << " ha ganado.";
+            (players[0]->getWinState()) && cout << "El jugador " << players[0]->getName() << " ha ganado.\n";
+            (players[1]->getWinState()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
+            (players[2]->getWinState()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
         }
     }
     return 0;

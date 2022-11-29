@@ -10,7 +10,7 @@ private:
     /// @brief Variable contains the name of the player
     string name;
     /// @brief
-    bool win, requestCard;
+    bool win, requestCard, ranking;
     /// @brief The player class has a some cards for play
     vector<Card> myCards;
 
@@ -36,6 +36,14 @@ public:
     {
         this->getPoints();
         return this->win;
+    }
+    bool getBoolRanking()
+    {
+        if (this->getPoints() < 21)
+        {
+            this->ranking = true;
+        }
+        return this->ranking;
     }
 
     bool changeValueCard_AS()
@@ -121,6 +129,7 @@ Player::Player(string _name)
     this->name = _name;
     this->win = false;
     this->requestCard = false;
+    this->ranking = false;
 }
 /// @brief Destroyer
 Player::~Player()
