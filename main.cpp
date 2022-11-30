@@ -129,6 +129,7 @@ int main()
         }
         else
         {
+            //*We classify the players
             int counterClasification = 0;
             for (int i = 0; i < 3; i++)
             {
@@ -140,11 +141,13 @@ int main()
             }
             switch (counterClasification)
             {
+                //* In this case it could be that all three win.
             case 1:
                 (players[0]->getClasification()) ? cout << players[0]->getName() << " ha ganado.🏆\n" : cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
                 (players[1]->getClasification()) ? cout << players[1]->getName() << " ha ganado.🏆\n" : cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
                 (players[2]->getClasification()) ? cout << players[2]->getName() << " ha ganado.🏆\n" : cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
                 break;
+                //* In this case one of the three was disqualified
             case 2:
                 if (!players[0]->getClasification())
                 {
@@ -204,6 +207,7 @@ int main()
                     }
                 }
                 break;
+                //*In this case, they are all under 21 points and they are different, so the one with the highest value is taken, that is the winner.
             case 3:
                 if (players[0]->getPoints() == players[1]->getPoints() && players[1]->getPoints() == players[2]->getPoints())
                 {
@@ -252,7 +256,39 @@ int main()
                 }
                 else
                 {
-                    cout << "Se ordena acendentemente y el ultimo es el ganador";
+                    if (players[0]->getPoints() < players[1]->getPoints() && players[0]->getPoints() < players[2]->getPoints())
+                    {
+                        if (players[1]->getPoints() < players[2]->getPoints())
+                        {
+                            cout << players[2]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[1]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                    }
+                    else if (players[1]->getPoints() < players[0]->getPoints() && players[1]->getPoints() < players[2]->getPoints())
+                    {
+                        if (players[0]->getPoints() < players[2]->getPoints())
+                        {
+                            cout << players[2]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[0]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                    }
+                    else if (players[2]->getPoints() < players[0]->getPoints() && players[2]->getPoints() < players[1]->getPoints())
+                    {
+                        if (players[0]->getPoints() < players[1]->getPoints())
+                        {
+                            cout << players[1]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[0]->getName() << " es el ganador de la partida.🏆\n";
+                        }
+                    }
                 }
                 break;
             }
