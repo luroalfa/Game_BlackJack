@@ -15,7 +15,6 @@ using namespace std;
 Player *players[3];
 /// @brief Deck of cards
 vector<Card> maso;
-// TODO Verify the method print card 2 o more numbers
 //  FUNCTIONS DECLARATION
 
 /// @brief The function is used to print cards of each player
@@ -77,9 +76,9 @@ int main()
     if (players[0]->getWinState() || players[1]->getWinState() || players[2]->getWinState())
     {
         showAllCard();
-        (players[0]->getWinState()) && cout << "El jugador " << players[0]->getName() << " ha ganado.";
-        (players[1]->getWinState()) && cout << "El jugador " << players[1]->getName() << " ha ganado.";
-        (players[2]->getWinState()) && cout << "El jugador " << players[2]->getName() << " ha ganado.";
+        (players[0]->getWinState()) ? cout << "El jugador " << players[0]->getName() << " hizo BlackJack.🥇\n" : cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
+        (players[1]->getWinState()) ? cout << "El jugador " << players[1]->getName() << " hizo BlackJack.🥇\n" : cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
+        (players[2]->getWinState()) ? cout << "El jugador " << players[2]->getName() << " hizo BlackJack.🥇\n" : cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
     }
     else
     {
@@ -115,195 +114,153 @@ int main()
             system("clear");
             //* In the while we verify if someone has won or if all players did not request a card
         } while ((players[0]->getRequestCard() || players[1]->getRequestCard() || players[2]->getRequestCard()) && !(players[0]->getWinState() && !players[1]->getWinState() && !players[2]->getWinState()));
-
-        //* Check if all players not request card
-        if (!players[0]->getRequestCard() && !players[1]->getRequestCard() && !players[2]->getRequestCard())
+        showAllCard();
+        if (players[0]->getPoints() > 21 && players[1]->getPoints() > 21 && players[2]->getPoints() > 21)
         {
-            showAllCard();
-            if (players[0]->getPoints() == players[1]->getPoints() && players[1]->getPoints() == players[2]->getPoints())
+            cout << "El jugador " << players[0]->getName() << " ha quedado descalificado.🤷\n";
+            cout << "El jugador " << players[1]->getName() << " ha quedado descalificado.🤷\n";
+            cout << "El jugador " << players[2]->getName() << " ha quedado descalificado.🤷\n";
+        }
+        else if (players[0]->getWinState() || players[1]->getWinState() || players[2]->getWinState())
+        {
+            (players[0]->getWinState()) ? cout << "El jugador " << players[0]->getName() << " hizo BlackJack.🥇\n" : cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
+            (players[1]->getWinState()) ? cout << "El jugador " << players[1]->getName() << " hizo BlackJack.🥇\n" : cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
+            (players[2]->getWinState()) ? cout << "El jugador " << players[2]->getName() << " hizo BlackJack.🥇\n" : cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
+        }
+        else
+        {
+            int counterClasification = 0;
+            for (int i = 0; i < 3; i++)
             {
-                cout << "Los 3 jugadores han ganado!";
-                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
-                cout << "Jugador " << players[0]->getName() << " con " << players[1]->getPoints() << " pts \n";
-                cout << "Jugador " << players[0]->getName() << " con " << players[2]->getPoints() << " pts \n";
-            }
-            else
-            {
-                //*If any of them went too far, we check if the other 2 are the same and if not, we show the winner
-                if (!players[0]->getBoolRanking())
+                if (players[i]->getPoints() < 22)
                 {
+                    players[i]->setClasification(true);
+                    counterClasification++;
+                }
+            }
+            switch (counterClasification)
+            {
+            case 1:
+                (players[0]->getClasification()) ? cout << players[0]->getName() << " ha ganado.🏆\n" : cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
+                (players[1]->getClasification()) ? cout << players[1]->getName() << " ha ganado.🏆\n" : cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
+                (players[2]->getClasification()) ? cout << players[2]->getName() << " ha ganado.🏆\n" : cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
+                break;
+            case 2:
+                if (!players[0]->getClasification())
+                {
+                    cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
                     if (players[1]->getPoints() == players[2]->getPoints())
                     {
-                        (players[1]->getBoolRanking()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
-                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                        cout << players[1]->getName() << " ha ganado.🏆\n";
+                        cout << players[2]->getName() << " ha ganado.🏆\n";
+                    }
+                    else if (players[1]->getPoints() > players[2]->getPoints())
+                    {
+                        cout << players[1]->getName() << " es el ganador de la partida.🏆\n";
+                        cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
                     }
                     else
                     {
-                        (players[1]->getPoints() > players[2]->getPoints()) ? cout << "El jugador " << players[1]->getName() << " ha ganado." : cout << "El jugador " << players[2]->getName() << " ha ganado.";
+                        cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
+                        cout << players[2]->getName() << " es el ganador de la partida.🏆\n";
                     }
                 }
-                else if (!players[1]->getBoolRanking())
+                else if (!players[1]->getClasification())
                 {
+                    cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
                     if (players[0]->getPoints() == players[2]->getPoints())
                     {
-                        (players[0]->getBoolRanking()) && cout << "El jugador " << players[0]->getName() << " ha ganado.\n";
-                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                        cout << players[2]->getName() << " ha ganado.🏆\n";
+                        cout << players[0]->getName() << " ha ganado.🏆\n";
+                    }
+                    else if (players[0]->getPoints() > players[2]->getPoints())
+                    {
+                        cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
+                        cout << players[0]->getName() << " es el ganador de la partida.🏆\n";
                     }
                     else
                     {
-                        (players[0]->getPoints() > players[2]->getPoints()) ? cout << "El jugador " << players[0]->getName() << " ha ganado." : cout << "El jugador " << players[1]->getName() << " ha ganado.";
+                        cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
+                        cout << players[2]->getName() << " es el ganador de la partida.🏆\n";
                     }
                 }
-                else if (!players[2]->getBoolRanking())
+                else if (!players[2]->getClasification())
                 {
-                    if (players[1]->getPoints() == players[0]->getPoints())
+                    cout << players[2]->getName() << " ha quedado descalificado.🤷\n";
+                    if (players[0]->getPoints() == players[1]->getPoints())
                     {
-                        (players[1]->getBoolRanking()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
-                        (players[2]->getBoolRanking()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
+                        cout << players[0]->getName() << " ha ganado.🏆\n";
+                        cout << players[1]->getName() << " ha ganado.🏆\n";
+                    }
+                    else if (players[0]->getPoints() > players[1]->getPoints())
+                    {
+                        cout << players[1]->getName() << " ha quedado descalificado.🤷\n";
+                        cout << players[0]->getName() << " es el ganador de la partida.🏆\n";
                     }
                     else
                     {
-                        (players[1]->getPoints() > players[0]->getPoints()) ? cout << "El jugador " << players[1]->getName() << " ha ganado." : cout << "El jugador " << players[0]->getName() << " ha ganado.";
+                        cout << players[0]->getName() << " ha quedado descalificado.🤷\n";
+                        cout << players[1]->getName() << " es el ganador de la partida.🏆\n";
+                    }
+                }
+                break;
+            case 3:
+                if (players[0]->getPoints() == players[1]->getPoints() && players[1]->getPoints() == players[2]->getPoints())
+                {
+                    cout << players[0]->getName() << " ha ganado.🏆\n";
+                    cout << players[1]->getName() << " ha ganado.🏆\n";
+                    cout << players[2]->getName() << " ha ganado.🏆\n";
+                }
+                else if (players[0]->getPoints() == players[1]->getPoints() || players[0]->getPoints() == players[2]->getPoints() || players[1]->getPoints() == players[2]->getPoints())
+                {
+                    if (players[0]->getPoints() == players[1]->getPoints())
+                    {
+                        if (players[0]->getPoints() > players[2]->getPoints())
+                        {
+                            cout << players[0]->getName() << " ha ganado.🏆\n";
+                            cout << players[1]->getName() << " ha ganado.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[2]->getName() << " ha ganado.🏆\n";
+                        }
+                    }
+                    else if (players[0]->getPoints() == players[2]->getPoints())
+                    {
+                        if (players[0]->getPoints() > players[1]->getPoints())
+                        {
+                            cout << players[0]->getName() << " ha ganado.🏆\n";
+                            cout << players[2]->getName() << " ha ganado.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[1]->getName() << " ha ganado.🏆\n";
+                        }
+                    }
+                    else if (players[1]->getPoints() == players[2]->getPoints())
+                    {
+                        if (players[1]->getPoints() > players[0]->getPoints())
+                        {
+                            cout << players[1]->getName() << " ha ganado.🏆\n";
+                            cout << players[2]->getName() << " ha ganado.🏆\n";
+                        }
+                        else
+                        {
+                            cout << players[0]->getName() << " ha ganado.🏆\n";
+                        }
                     }
                 }
                 else
                 {
-                    //*If someone has equal points and all players have less than 21 points
-                    if (players[0]->getPoints() == players[1]->getPoints() || players[0]->getPoints() == players[2]->getPoints() || players[1]->getPoints() == players[2]->getPoints())
-                    {
-                        if (players[0]->getPoints() == players[1]->getPoints())
-                        {
-                            if (players[0]->getPoints() > players[2]->getPoints())
-                            {
-                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
-                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
-                            }
-                            else
-                            {
-                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
-                            }
-                        }
-                        else if (players[0]->getPoints() == players[2]->getPoints())
-                        {
-                            if (players[0]->getPoints() > players[1]->getPoints())
-                            {
-                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
-                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
-                            }
-                            else
-                            {
-                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
-                            }
-                        }
-                        else if (players[1]->getPoints() == players[2]->getPoints())
-                        {
-                            if (players[1]->getPoints() > players[0]->getPoints())
-                            {
-                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
-                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
-                            }
-                            else
-                            {
-                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //*The 3 players have points less than 21pts, the one with the highest points must be selected
-                        if (players[0]->getPoints() > players[1]->getPoints())
-                        {
-                            if (players[0]->getPoints() > players[2]->getPoints())
-                            {
-                                cout << "Jugador " << players[0]->getName() << " con " << players[0]->getPoints() << " pts \n";
-                            }
-                            else
-                            {
-                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
-                            }
-                        }
-                        else
-                        {
-                            if (players[1]->getPoints() > players[2]->getPoints())
-                            {
-                                cout << "Jugador " << players[1]->getName() << " con " << players[1]->getPoints() << " pts \n";
-                            }
-                            else
-                            {
-                                cout << "Jugador " << players[2]->getName() << " con " << players[2]->getPoints() << " pts \n";
-                            }
-                        }
-                    }
+                    cout << "Se ordena acendentemente y el ultimo es el ganador";
                 }
+                break;
             }
-        }
-        else
-        {
-            showAllCard();
-            (players[0]->getWinState()) && cout << "El jugador " << players[0]->getName() << " ha ganado.\n";
-            (players[1]->getWinState()) && cout << "El jugador " << players[1]->getName() << " ha ganado.\n";
-            (players[2]->getWinState()) && cout << "El jugador " << players[2]->getName() << " ha ganado.\n";
         }
     }
     return 0;
 }
 
-vector<Card> fillCards()
-{
-    maso.push_back(Card("A", 11, "♦"));
-    maso.push_back(Card("2", 2, "♦"));
-    maso.push_back(Card("3", 3, "♦"));
-    maso.push_back(Card("4", 4, "♦"));
-    maso.push_back(Card("5", 5, "♦"));
-    maso.push_back(Card("6", 6, "♦"));
-    maso.push_back(Card("7", 7, "♦"));
-    maso.push_back(Card("8", 8, "♦"));
-    maso.push_back(Card("9", 9, "♦"));
-    maso.push_back(Card("10", 10, "♦"));
-    maso.push_back(Card("J", 10, "♦"));
-    maso.push_back(Card("Q", 10, "♦"));
-    maso.push_back(Card("K", 10, "♦"));
-    maso.push_back(Card("A", 11, "♣"));
-    maso.push_back(Card("2", 2, "♣"));
-    maso.push_back(Card("3", 3, "♣"));
-    maso.push_back(Card("4", 4, "♣"));
-    maso.push_back(Card("5", 5, "♣"));
-    maso.push_back(Card("6", 6, "♣"));
-    maso.push_back(Card("7", 7, "♣"));
-    maso.push_back(Card("8", 8, "♣"));
-    maso.push_back(Card("9", 9, "♣"));
-    maso.push_back(Card("10", 10, "♣"));
-    maso.push_back(Card("J", 10, "♣"));
-    maso.push_back(Card("Q", 10, "♣"));
-    maso.push_back(Card("K", 10, "♣"));
-    maso.push_back(Card("A", 11, "♥"));
-    maso.push_back(Card("2", 2, "♥"));
-    maso.push_back(Card("3", 3, "♥"));
-    maso.push_back(Card("4", 4, "♥"));
-    maso.push_back(Card("5", 5, "♥"));
-    maso.push_back(Card("6", 6, "♥"));
-    maso.push_back(Card("7", 7, "♥"));
-    maso.push_back(Card("8", 8, "♥"));
-    maso.push_back(Card("9", 9, "♥"));
-    maso.push_back(Card("10", 10, "♥"));
-    maso.push_back(Card("J", 10, "♥"));
-    maso.push_back(Card("Q", 10, "♥"));
-    maso.push_back(Card("K", 10, "♥"));
-    maso.push_back(Card("A", 11, "♠"));
-    maso.push_back(Card("2", 2, "♠"));
-    maso.push_back(Card("3", 3, "♠"));
-    maso.push_back(Card("4", 4, "♠"));
-    maso.push_back(Card("5", 5, "♠"));
-    maso.push_back(Card("6", 6, "♠"));
-    maso.push_back(Card("7", 7, "♠"));
-    maso.push_back(Card("8", 8, "♠"));
-    maso.push_back(Card("9", 9, "♠"));
-    maso.push_back(Card("10", 10, "♠"));
-    maso.push_back(Card("J", 10, "♠"));
-    maso.push_back(Card("Q", 10, "♠"));
-    maso.push_back(Card("K", 10, "♠"));
-    return maso;
-}
 void printCards(vector<Card> cards)
 {
     for (int r = 0; r < 5; r++)
@@ -457,4 +414,60 @@ bool deliverCard(int _player)
     players[_player]->pushMyCards(maso.back());
     maso.pop_back();
     return true;
+}
+vector<Card> fillCards()
+{
+    maso.push_back(Card("A", 11, "♦"));
+    maso.push_back(Card("2", 2, "♦"));
+    maso.push_back(Card("3", 3, "♦"));
+    maso.push_back(Card("4", 4, "♦"));
+    maso.push_back(Card("5", 5, "♦"));
+    maso.push_back(Card("6", 6, "♦"));
+    maso.push_back(Card("7", 7, "♦"));
+    maso.push_back(Card("8", 8, "♦"));
+    maso.push_back(Card("9", 9, "♦"));
+    maso.push_back(Card("10", 10, "♦"));
+    maso.push_back(Card("J", 10, "♦"));
+    maso.push_back(Card("Q", 10, "♦"));
+    maso.push_back(Card("K", 10, "♦"));
+    maso.push_back(Card("A", 11, "♣"));
+    maso.push_back(Card("2", 2, "♣"));
+    maso.push_back(Card("3", 3, "♣"));
+    maso.push_back(Card("4", 4, "♣"));
+    maso.push_back(Card("5", 5, "♣"));
+    maso.push_back(Card("6", 6, "♣"));
+    maso.push_back(Card("7", 7, "♣"));
+    maso.push_back(Card("8", 8, "♣"));
+    maso.push_back(Card("9", 9, "♣"));
+    maso.push_back(Card("10", 10, "♣"));
+    maso.push_back(Card("J", 10, "♣"));
+    maso.push_back(Card("Q", 10, "♣"));
+    maso.push_back(Card("K", 10, "♣"));
+    maso.push_back(Card("A", 11, "♥"));
+    maso.push_back(Card("2", 2, "♥"));
+    maso.push_back(Card("3", 3, "♥"));
+    maso.push_back(Card("4", 4, "♥"));
+    maso.push_back(Card("5", 5, "♥"));
+    maso.push_back(Card("6", 6, "♥"));
+    maso.push_back(Card("7", 7, "♥"));
+    maso.push_back(Card("8", 8, "♥"));
+    maso.push_back(Card("9", 9, "♥"));
+    maso.push_back(Card("10", 10, "♥"));
+    maso.push_back(Card("J", 10, "♥"));
+    maso.push_back(Card("Q", 10, "♥"));
+    maso.push_back(Card("K", 10, "♥"));
+    maso.push_back(Card("A", 11, "♠"));
+    maso.push_back(Card("2", 2, "♠"));
+    maso.push_back(Card("3", 3, "♠"));
+    maso.push_back(Card("4", 4, "♠"));
+    maso.push_back(Card("5", 5, "♠"));
+    maso.push_back(Card("6", 6, "♠"));
+    maso.push_back(Card("7", 7, "♠"));
+    maso.push_back(Card("8", 8, "♠"));
+    maso.push_back(Card("9", 9, "♠"));
+    maso.push_back(Card("10", 10, "♠"));
+    maso.push_back(Card("J", 10, "♠"));
+    maso.push_back(Card("Q", 10, "♠"));
+    maso.push_back(Card("K", 10, "♠"));
+    return maso;
 }

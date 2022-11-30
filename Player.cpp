@@ -10,7 +10,7 @@ private:
     /// @brief Variable contains the name of the player
     string name;
     /// @brief
-    bool win, requestCard, ranking;
+    bool win, requestCard, ranking, clasification;
     /// @brief The player class has a some cards for play
     vector<Card> myCards;
 
@@ -37,9 +37,9 @@ public:
         this->getPoints();
         return this->win;
     }
-    bool getBoolRanking()
+    bool getRaking()
     {
-        if (this->getPoints() < 21)
+        if (this->getPoints() <= 21)
         {
             this->ranking = true;
         }
@@ -120,6 +120,14 @@ public:
     {
         return this->myCards.size();
     }
+    void setClasification(bool _clasif)
+    {
+        this->clasification = _clasif;
+    }
+    bool getClasification()
+    {
+        return this->clasification;
+    }
 };
 // CONSTRUCTORS OVERLOAD
 /// @brief Second constructor, only the name is initialized
@@ -130,6 +138,7 @@ Player::Player(string _name)
     this->win = false;
     this->requestCard = false;
     this->ranking = false;
+    this->clasification = false;
 }
 /// @brief Destroyer
 Player::~Player()
