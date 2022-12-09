@@ -2,25 +2,21 @@
 ## Game made in c++ 👨🏻‍💻
 
 ![Image](https://github.com/luroalfa/perfil/blob/main/Init_game.jpeg)
-
 ![Image](https://github.com/luroalfa/Game_BlackJack/blob/main/images/blackjack.jpeg)
 
-La implementación del juego fue basada unas reglas de negocio de un cliente.
+La implementación del juego fue basada con una regla de negocio.
+REGLAS DE NEGOCIO: Son las reglas del cliente que vamos a seguir para desarrollar el juego o la app.
 
+Este juego de cartas es conocido como Blackjack o 21 consiste en un sencillo juego cuyo objetivo es lograr obtener 21 puntos o lo más cercano posible, pero sin pasarse.
 
-Este juego de cartas es conocido como Blackjack o 21 consiste en un sencillo juego cuyo objetivo es lograr obtener 21 puntos o lo más cercano posible, pero sin pasarse. 
-
-En la baraja cada carta numérica vale sus respectivos puntos, cada carta con dibujo (J, Q, K) valen 10 puntos y el As vale 1 u 11 puntos, el valor del As lo decide el jugador a su conveniencia. 
+En la baraja cada carta numérica vale sus respectivos puntos, cada carta con dibujo (J, Q, K) valen 10 puntos y el As vale 1 u 11 puntos, el valor del As lo decide el jugador a su conveniencia.
 Se reparten 2 cartas a cada jugador, y cada jugador decide si pide más cartas o se queda con su valor actual. 
 
 Gana la persona que logre obtener 21 puntos, o lo más cercano posible, pero sin pasarse. 
 
-REGLAS DE NEGOCIO: Son las reglas del cliente que vamos a seguir para desarrollar el juego.
-
-
 Implementación: 
 
-Realice una aplicación de consola que permita a 3 personas jugar una partida de Blackjack, no se utilizarán las reglas oficiales (dividir, doblar, rendirse, seguro, cobrar 1 a 1, etc.). Tampoco existirán las reglas de verse obligado a pedir si se tiene mayor o menor cantidad de ciertos puntos. No existirá la figura oficial del crupier (repartidor), ya que este tiene reglas diferentes. 
+Realizar una aplicación de consola que permita a 3 personas jugar una partida de Blackjack, no se utilizarán las reglas oficiales (dividir, doblar, rendirse, seguro, cobrar 1 a 1, etc.). Tampoco existirán las reglas de verse obligado a pedir si se tiene mayor o menor cantidad de ciertos puntos. No existirá la figura oficial del crupier (repartidor), ya que este tiene reglas diferentes. 
 
 Se realizará una partida sencilla en donde al iniciar se le reparten 2 cartas a cada una de las 3 personas. Cada persona puede decidir si quiere una carta más en cada ronda, pero si se pasa de 21 automáticamente pierde. 
 
