@@ -3,7 +3,7 @@
 
 ![Image](https://github.com/luroalfa/perfil/blob/main/Init_game.jpeg)
 
-La implementación fue basada las reglas de negocio del cliente.
+La implementación del juego fue basada unas reglas de negocio de un cliente.
 
 
 Este juego de cartas es conocido como Blackjack o 21 consiste en un sencillo juego cuyo objetivo es lograr obtener 21 puntos o lo más cercano posible, pero sin pasarse. 
