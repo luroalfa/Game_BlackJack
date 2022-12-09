@@ -3,6 +3,8 @@
 
 ![Image](https://github.com/luroalfa/perfil/blob/main/Init_game.jpeg)
 
+![Image](https://github.com/luroalfa/Game_BlackJack/blob/main/images/blackjack.jpeg)
+
 La implementación del juego fue basada unas reglas de negocio de un cliente.
 
 
